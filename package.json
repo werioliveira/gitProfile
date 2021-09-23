@@ -1,0 +1,21 @@
+{
+  "name": "gitprofile",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "werioliveira <werioliveira@hotmail.com>",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12"
+  }
+}

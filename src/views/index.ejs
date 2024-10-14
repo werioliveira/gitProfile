@@ -11,36 +11,63 @@
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
-    <div class="container-fluid navbar">
-      <a href="<%= process.env.ROUTE_MAIN%>" targer="_self" class="text-navbar">GitHub Profile</a>
-    </div>
-    <div class="container-fluid web-body">
-      <div class="form-container">
-        <form method="POST" action="/">
-          <input type="text" placeholder="Digite o nome de usuario" name="user" id="user-input">
-          <button type="submit" class="btn btn-primary search">Buscar</button>
-      </form>
-      </div>
-
-        <div class="container latest">
-            <H3 style="margin: 20px;">Ultimas buscas:</H3>
+    <aside class="sidebar">
+        <h2>Histórico de Busca</h2>
+        <ul class="history-list">
           <% for(var i=0; i<latest.length; i++) {%>
             <% if (i<6) {%>
-            <div class="body-latest">
                
-                <p><%= latest[i].search %></p>
-               
-                
-            </div>
+                <li><%= latest[i].search %></li>    
             <%}%>
             <%}%>
-        </div>
-    </div>
+            <!-- Adicione mais itens de histórico conforme necessário -->
+        </ul>
+    </aside>
+    <main class="main-content">
+      <form method="POST" action="/" class="searchform">
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+        <div class="search-container">
+          <input type="text" class="search-input" name="user" id="user-input" placeholder="Digite o nome de usuário do GitHub...">
+        </div>
+      </form>
+      <% if (user.login) { %>
+        <div class="profile-container">
+            <img src="<%= user.avatar_url %>" alt="Foto de perfil" class="profile-image">
+            <button class="back-button" onclick="location.href='/'">Voltar</button>
+            <div class="profile-info">
+              <h2><%= user.name %></h2>
+              <p>@<%= user.login %></p>
+              <p><%= user.bio %></p>
+              <div class="profile-stats">
+                  <div class="stat">
+                      <div class="stat-value"><%= user.public_repos %></div>
+                      <div class="stat-label">Repositórios</div>
+                  </div>
+                  <div class="stat">
+                      <div class="stat-value"><%= user.followers %></div>
+                      <div class="stat-label">Seguidores</div>
+                  </div>
+                  <div class="stat">
+                      <div class="stat-value"><%= user.following %></div>
+                      <div class="stat-label">Seguindo</div>
+                  </div>
+              </div>
+        </div>
+        <% } %>
+    </main>
+</body>
+<script>
+
+  function submitForm(){
+    document.searchform.submit();
+    document.searchform.method='post';
+  }
+  document.onkeydown=function(){
+    if(window.event.keyCode=='13'){
+        submitForm();
+    }
+}
+document.getElementById("searchform").onclick = submitForm;
+
+</script>
 </html>
